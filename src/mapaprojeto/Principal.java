@@ -1,9 +1,6 @@
 
 package mapaprojeto;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
@@ -16,15 +13,22 @@ import java.util.Iterator;
 
 public class Principal extends javax.swing.JFrame {
     
-    List<Senha> listaDeSenhas;
-    int numero;    
-    
+    private final ControleAtendimento controle = new ControleAtendimento();
+
 
     public Principal() {
         initComponents();
-        
-        numero = 0;
-        listaDeSenhas = new ArrayList<>();
+    }
+
+    private void gerarSenha(String tipo) {
+        Senha senha = controle.gerarSenha(tipo);
+        lblMostraSenha.setText(senha.toString());
+        txtInformaSenha.setText(senha.toString());
+    }
+
+    private void chamarCaixa(int caixa) {
+        controle.chamarProxima(caixa)
+                .ifPresent(senha -> lblMostraCaixa.setText(senha + " Caixa " + caixa));
     }
 
     
@@ -259,145 +263,34 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bComumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bComumActionPerformed
-        numero++;
-        Senha senha = new Senha("C", numero);
-        listaDeSenhas.add(senha);
-        lblMostraSenha.setText(String.valueOf(senha.getSenha() + "-" + senha.getNumero()));
-        txtInformaSenha.setText(String.valueOf(senha.getSenha() + "-" + senha.getNumero()));
+        gerarSenha(ControleAtendimento.COMUM);
     }//GEN-LAST:event_bComumActionPerformed
 
     private void bRapidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRapidoActionPerformed
-        numero++;
-        Senha senha = new Senha("R", numero);
-        listaDeSenhas.add(senha);
-        lblMostraSenha.setText(String.valueOf(senha.getSenha() + "-" + senha.getNumero()));
-        txtInformaSenha.setText(String.valueOf(senha.getSenha() + "-" + senha.getNumero()));
+        gerarSenha(ControleAtendimento.RAPIDO);
     }//GEN-LAST:event_bRapidoActionPerformed
 
     private void bCaixa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCaixa1ActionPerformed
-        Iterator<Senha> itr = listaDeSenhas.iterator();        
-        Iterator<Senha> itr2 = listaDeSenhas.iterator();
-        
-        while(itr.hasNext()){
-        Senha se = itr.next();
-        
-            if(se.getSenha().startsWith("P")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 1");
-                System.out.println("lista: "+listaDeSenhas.toString());
-                                    
-                itr.remove();
-                return;
-
-            }     
-        } 
-        while(itr2.hasNext()){
-        Senha se = itr2.next();
-        
-        if(se.getSenha().endsWith("C") || se.getSenha().endsWith("R")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 1");
-                System.out.println("lista: "+listaDeSenhas.toString());                                        
-
-                itr2.remove();
-                break;
-            }
-        }    
+        chamarCaixa(1);
     }//GEN-LAST:event_bCaixa1ActionPerformed
 
     private void txtInformaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInformaSenhaActionPerformed
     }//GEN-LAST:event_txtInformaSenhaActionPerformed
 
     private void bPrioritarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrioritarioActionPerformed
-        numero++;
-        Senha senha = new Senha("P", numero);
-        listaDeSenhas.add(senha);
-        lblMostraSenha.setText(String.valueOf(senha.getSenha() + "-" + senha.getNumero()));
-        txtInformaSenha.setText(String.valueOf(senha.getSenha() + "-" + senha.getNumero()));          
+        gerarSenha(ControleAtendimento.PREFERENCIAL);
     }//GEN-LAST:event_bPrioritarioActionPerformed
 
     private void bCaixa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCaixa2ActionPerformed
-        Iterator<Senha> itr = listaDeSenhas.iterator();        
-        Iterator<Senha> itr2 = listaDeSenhas.iterator();
-        
-        while(itr.hasNext()){
-        Senha se = itr.next();
-        
-            if(se.getSenha().startsWith("R")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 2");
-                System.out.println("lista: "+listaDeSenhas.toString());
-                                    
-                itr.remove();
-                return;
-
-            }     
-        } 
-        while(itr2.hasNext()){
-        Senha se = itr2.next();
-        
-        if(se.getSenha().endsWith("C") || se.getSenha().endsWith("P")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 2");
-                System.out.println("lista: "+listaDeSenhas.toString());                                        
-
-                itr2.remove();
-                break;
-            }
-        } 
+        chamarCaixa(2);
     }//GEN-LAST:event_bCaixa2ActionPerformed
 
     private void bCaixa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCaixa3ActionPerformed
-        Iterator<Senha> itr = listaDeSenhas.iterator();        
-        Iterator<Senha> itr2 = listaDeSenhas.iterator();
-        
-        while(itr.hasNext()){
-        Senha se = itr.next();
-        
-            if(se.getSenha().startsWith("R")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 3");
-                System.out.println("lista: "+listaDeSenhas.toString());
-                                    
-                itr.remove();
-                return;
-
-            }     
-        } 
-        while(itr2.hasNext()){
-        Senha se = itr2.next();
-        
-        if(se.getSenha().endsWith("C") || se.getSenha().endsWith("P")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 3");
-                System.out.println("lista: "+listaDeSenhas.toString());                                        
-
-                itr2.remove();
-                break;
-            }
-        } 
+        chamarCaixa(3);
     }//GEN-LAST:event_bCaixa3ActionPerformed
 
     private void bCaixa4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCaixa4ActionPerformed
-        Iterator<Senha> itr = listaDeSenhas.iterator();        
-        Iterator<Senha> itr2 = listaDeSenhas.iterator();
-        
-        while(itr.hasNext()){
-        Senha se = itr.next();
-        
-            if(se.getSenha().startsWith("C")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 4");
-                System.out.println("lista: "+listaDeSenhas.toString());
-                                    
-                itr.remove();
-                return;
-            }     
-        } 
-        while(itr2.hasNext()){
-        Senha se = itr2.next();
-        
-        if(se.getSenha().endsWith("R") || se.getSenha().endsWith("P")){
-                lblMostraCaixa.setText(se.getSenha() + "-" + se.getNumero() + " Caixa 4");
-                System.out.println("lista: "+listaDeSenhas.toString());                                        
-
-                itr2.remove();
-                break;
-            }
-        } 
+        chamarCaixa(4);
     }//GEN-LAST:event_bCaixa4ActionPerformed
 
     private void txtInformaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInformaSenhaKeyReleased
